@@ -1,9 +1,25 @@
 const express = require("express");
-const path = require("path");
-const app = express();
-const PORT = process.env.PORT || 4111;
-app.listen(PORT, console.log("Server don start for port: " + PORT));
+const router = express.Router();
+const fs = require("fs");
+const testFolder = "/Users/karthick.narasimhan/github/member-area-root";
+// For View
+const homeView = (req, res) => {
+  fs.readdir(testFolder, (err, files) => {
+    console.log(files);
+    res.render("home", { files: files });
+  });
+};
 
-app.use("/static", express.static(path.join(__dirname, "public")));
-app.set("view engine", "ejs");
-app.use("/", require("./routes/appRouter"));
+router.get("/file/:fileName", function (req, res) {
+  const file = testFolder + "/" + req.params.fileName;
+  console.log(file);
+  res.download(file); // Set disposition and send it.
+});
+
+router.post("/fileSearch", function (req, res) {
+  console.log(req.body);
+});
+
+router.get("/home", homeView);
+
+module.exports = router;
