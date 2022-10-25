@@ -16,6 +16,10 @@ router.get("/file/:fileName", function (req, res) {
   res.download(file); // Set disposition and send it.
 });
 
+router.post("/fileSearch", function (req, res) {
+  console.log(req.body);
+});
+
 router.get("/home", homeView);
 
 module.exports = router;
