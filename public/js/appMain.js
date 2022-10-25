@@ -15,8 +15,22 @@ $(document).ready(function () {
       dataType: "json",
       contentType: "application/json;charset=utf-8",
       data: JSON.stringify(dataBody),
-      success: function (result) {
-        console.log(result);
+      success: function (fileDetails) {
+        console.log(fileDetails);
+        var tbodyHtml = "";
+        fileDetails.forEach((element) => {
+          var trHtml =
+            "<tr><td><a href='/file/" +
+            element.file_name +
+            "' >" +
+            element.file_name +
+            "</a></td><td>" +
+            element.modified_date +
+            "</td></tr>";
+          tbodyHtml = tbodyHtml + trHtml;
+        });
+        $("#fileTable tbody").html(tbodyHtml);
+        $("#fileTable").removeClass("invisible");
       },
     });
   });
